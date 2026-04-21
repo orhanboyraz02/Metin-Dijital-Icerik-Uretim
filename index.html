@@ -3,145 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ORHAN BOYRAZ | AI Content Factory</title>
+    <title>ORHAN BOYRAZ | DİJİTAL İÇERİK ÜRETİM MERKEZİ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@300;400;600;700&display=swap');
-
-        :root {
-            --navy-bg: #020617;
-            --gold: #ffd700;
-            --gold-grad: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
-        }
-
-        body { font-family: 'Inter', sans-serif; background-color: var(--navy-bg); color: white; overflow: hidden; height: 100vh; }
-        .gold-text { background: var(--gold-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: 'Cinzel', serif; }
-        .sidebar-item { transition: 0.3s; border-left: 4px solid transparent; }
+        :root { --navy: #020617; --gold: #ffd700; --gold-grad: linear-gradient(135deg, #ffd700 0%, #b8860b 100%); }
+        body { font-family: 'Inter', sans-serif; background-color: var(--navy); color: white; overflow: hidden; height: 100vh; }
+        .gold-text { background: var(--gold-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .sidebar-item { transition: 0.3s; border-left: 4px solid transparent; cursor: pointer; }
         .sidebar-item.active { background: rgba(255, 215, 0, 0.1); border-left-color: var(--gold); color: var(--gold); }
         .glass { background: rgba(10, 25, 47, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255, 215, 0, 0.1); border-radius: 15px; }
-        .type-card { cursor: pointer; transition: 0.3s; border: 1px solid rgba(255, 255, 255, 0.05); }
-        .type-card.active { border-color: var(--gold); background: rgba(255, 215, 0, 0.1); transform: translateY(-5px); }
-        .btn-gold { background: var(--gold-grad); color: black; font-weight: 800; transition: 0.3s; text-transform: uppercase; }
-        .btn-gold:hover { transform: scale(1.02); filter: brightness(1.1); }
+        .btn-gold { background: var(--gold-grad); color: black; font-weight: 800; transition: 0.3s; }
+        .btn-gold:hover { transform: scale(1.05); filter: brightness(1.1); }
         .hidden-page { display: none; }
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+        .package-card { transition: 0.4s; border: 1px solid rgba(255,255,255,0.05); }
+        .package-card:hover { border-color: var(--gold); transform: translateY(-10px); }
     </style>
 </head>
 <body class="flex flex-col h-screen">
 
     <div class="flex flex-1 overflow-hidden">
         <aside class="w-64 bg-[#010409] border-r border-gold/10 flex flex-col">
-            <div class="p-6 border-b border-gold/5">
-                <h2 class="gold-text text-lg leading-tight">ORHAN<br>BOYRAZ</h2>
-                <p class="text-[9px] tracking-[2px] text-gray-500 mt-1 uppercase">AI Architect</p>
+            <div class="p-6 border-b border-gold/5 text-center">
+                <h1 class="text-xl font-bold gold-text leading-tight font-[Cinzel]">DİJİTAL İÇERİK<br>ÜRETİM MERKEZİ</h1>
             </div>
             <nav class="flex-1 p-4 space-y-2">
-                <button onclick="showPage('creator')" class="nav-btn sidebar-item active w-full flex items-center p-3 gap-3 rounded text-sm">
-                    <i class="fas fa-wand-magic-sparkles"></i> İçerik Üretici
-                </button>
-                <button onclick="showPage('archive')" class="nav-btn sidebar-item w-full flex items-center p-3 gap-3 rounded text-sm">
-                    <i class="fas fa-box-archive"></i> Arşiv & Depo
-                </button>
-                <button onclick="showPage('packages')" class="nav-btn sidebar-item w-full flex items-center p-3 gap-3 rounded text-sm">
-                    <i class="fas fa-gem"></i> Paketlerim
-                </button>
+                <div onclick="showPage('creator')" class="nav-btn sidebar-item active p-3 flex items-center gap-3 rounded text-sm"><i class="fas fa-magic"></i> İçerik Üretici</div>
+                <div onclick="showPage('packages')" class="nav-btn sidebar-item p-3 flex items-center gap-3 rounded text-sm"><i class="fas fa-crown"></i> Paket Satın Al</div>
+                <a href="https://anadolunetwork.tr" target="_blank" class="sidebar-item p-3 flex items-center gap-3 rounded text-sm"><i class="fas fa-external-link-alt"></i> Web Siteme Git</a>
             </nav>
+            <div class="p-4 border-t border-gold/10 text-center">
+                <p class="text-[10px] text-gray-500 italic">Yönetici: Orhan BOYRAZ</p>
+            </div>
         </aside>
 
         <main class="flex-1 flex flex-col overflow-hidden bg-[#030712]">
             <header class="h-14 border-b border-white/5 flex items-center justify-between px-8 bg-black/20">
-                <div class="text-[10px] font-bold text-green-500 flex items-center gap-2">
-                    <span class="w-2 h-2 bg-green-500 rounded-full animate-ping"></span> SİSTEM ÇEVRİMİÇİ
-                </div>
-                <div class="text-[10px] text-gray-500 uppercase tracking-widest">Anadolu Network Bulut Altyapısı</div>
+                <div class="text-[10px] text-gold font-bold">ORHAN BOYRAZ ÖZEL PANEL V3.0</div>
+                <div id="usage-status" class="text-[10px] text-green-500 font-bold uppercase">Sınırsız Premium Erişim Aktif</div>
             </header>
 
-            <div class="flex-1 overflow-y-auto p-8 pb-24">
-                <section id="page-creator" class="page-view space-y-8">
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div onclick="setType('motivasyon')" id="t-motivasyon" class="type-card glass p-6 text-center active">
-                            <i class="fas fa-fire text-2xl text-gold mb-2"></i>
-                            <h4 class="text-xs font-bold">MOTİVASYON</h4>
-                        </div>
-                        <div onclick="setType('akademik')" id="t-akademik" class="type-card glass p-6 text-center">
-                            <i class="fas fa-graduation-cap text-2xl text-gold mb-2"></i>
-                            <h4 class="text-xs font-bold">AKADEMİK</h4>
-                        </div>
-                        <div onclick="setType('hikaye')" id="t-hikaye" class="type-card glass p-6 text-center">
-                            <i class="fas fa-book text-2xl text-gold mb-2"></i>
-                            <h4 class="text-xs font-bold">HİKAYE</h4>
-                        </div>
-                        <div onclick="setType('podcast')" id="t-podcast" class="type-card glass p-6 text-center">
-                            <i class="fas fa-microphone text-2xl text-gold mb-2"></i>
-                            <h4 class="text-xs font-bold">PODCAST</h4>
-                        </div>
+            <div class="flex-1 overflow-y-auto p-8">
+                <section id="page-creator" class="page-view space-y-6">
+                    <div class="grid grid-cols-4 gap-4">
+                        <button onclick="setMod('motivasyon')" class="mod-btn glass p-4 text-xs font-bold hover:bg-gold/10 transition border-gold/20" id="m-motivasyon">MOTİVASYON</button>
+                        <button onclick="setMod('akademik')" class="mod-btn glass p-4 text-xs font-bold hover:bg-gold/10 transition" id="m-akademik">AKADEMİK</button>
+                        <button onclick="setMod('hikaye')" class="mod-btn glass p-4 text-xs font-bold hover:bg-gold/10 transition" id="m-hikaye">HİKAYE</button>
+                        <button onclick="setMod('podcast')" class="mod-btn glass p-4 text-xs font-bold hover:bg-gold/10 transition" id="m-podcast">PODCAST</button>
                     </div>
 
-                    <div class="max-w-4xl mx-auto glass p-8 space-y-6">
-                        <div id="input-label" class="text-xs font-bold text-gold uppercase tracking-widest italic">Motivasyon Konusu Girin:</div>
+                    <div class="glass p-8 space-y-4">
+                        <h3 id="input-title" class="text-xs text-gold uppercase tracking-tighter">İçerik Konusu Giriniz:</h3>
                         <div class="flex gap-4">
-                            <input type="text" id="user-input" placeholder="Hayaller, Başarı, Sabır..." class="flex-1 bg-black/40 border border-gold/20 rounded-lg p-4 outline-none focus:border-gold">
-                            <button onclick="generate()" class="btn-gold px-8 py-4 rounded-lg">ÜRET</button>
+                            <input type="text" id="main-input" class="flex-1 bg-black/50 border border-gold/30 rounded p-4 outline-none focus:border-gold" placeholder="Örn: Başarı stratejileri...">
+                            <button onclick="runAI()" class="btn-gold px-10 rounded">ÜRET</button>
                         </div>
-
-                        <div id="output" class="bg-black/40 border border-white/5 p-6 rounded-lg min-h-[200px] text-gray-300 text-sm italic leading-relaxed">
-                            Seçilen modda üretim için bekleniyor...
-                        </div>
-
-                        <div id="download-zone" class="hidden flex gap-4">
-                            <button onclick="download('txt')" class="flex-1 py-2 bg-blue-900/40 border border-blue-500/30 rounded text-[10px] font-bold hover:bg-blue-500/20 uppercase transition">.TXT İndir</button>
-                            <button onclick="download('pdf')" class="flex-1 py-2 bg-red-900/40 border border-red-500/30 rounded text-[10px] font-bold hover:bg-red-500/20 uppercase transition">.PDF Kaydet</button>
+                        <div id="result" class="bg-black/30 p-6 rounded-lg min-h-[250px] text-gray-300 border border-white/5 whitespace-pre-wrap italic leading-relaxed">Üretim bekleniyor...</div>
+                        <div id="dl-btns" class="hidden flex gap-2">
+                            <button onclick="download('txt')" class="flex-1 py-2 bg-blue-600 rounded text-[10px] font-bold">METİN İNDİR</button>
+                            <button onclick="download('pdf')" class="flex-1 py-2 bg-red-600 rounded text-[10px] font-bold">PDF KAYDET</button>
                         </div>
                     </div>
                 </section>
 
-                <section id="page-packages" class="page-view hidden-page grid grid-cols-3 gap-6">
-                    <div class="glass p-6 opacity-50 border-white/5">
-                        <h3 class="font-bold mb-4">FREE</h3>
-                        <p class="text-2xl font-bold mb-6">₺0</p>
-                        <button class="w-full py-2 bg-gray-800 rounded text-[10px]">STANDART</button>
+                <section id="page-packages" class="page-view hidden-page">
+                    <div class="text-center mb-10">
+                        <h2 class="text-2xl gold-text font-bold uppercase">Abonelik ve Paket Yönetimi</h2>
+                        <p class="text-gray-400 text-xs">Paket yükseltmek için WhatsApp üzerinden iletişime geçin.</p>
                     </div>
-                    <div class="glass p-6 border-blue-500/30">
-                        <h3 class="font-bold text-blue-400 mb-4">PRO</h3>
-                        <p class="text-2xl font-bold mb-6">₺199</p>
-                        <button class="w-full py-2 bg-blue-600 rounded text-[10px]">AKTİF ET</button>
-                    </div>
-                    <div class="glass p-6 border-gold/50 bg-gold/5">
-                        <h3 class="font-bold text-gold mb-4 uppercase">Premium</h3>
-                        <p class="text-2xl font-bold mb-4">₺499</p>
-                        <div class="text-[9px] text-green-500 mb-6 uppercase">Orhan Boyraz İçin Sınırsız</div>
-                        <button class="w-full btn-gold py-2 rounded text-[10px]">AKTİF KULLANIM</button>
+                    <div class="grid grid-cols-4 gap-4">
+                        <div class="package-card glass p-6 flex flex-col items-center">
+                            <h4 class="font-bold">FREE</h4>
+                            <p class="text-2xl my-4">₺0</p>
+                            <ul class="text-[10px] text-gray-400 space-y-2 mb-6"><li>Günde 1 Üretim</li><li>Sınırlı Kelime</li></ul>
+                            <button class="w-full py-2 bg-gray-700 rounded text-[10px] uppercase">Şu Anki Paket</button>
+                        </div>
+                        <div class="package-card glass p-6 border-blue-500/30 flex flex-col items-center">
+                            <h4 class="font-bold text-blue-400">PRO</h4>
+                            <p class="text-2xl my-4">₺299</p>
+                            <ul class="text-[10px] text-gray-400 space-y-2 mb-6"><li>Günde 50 Üretim</li><li>PDF İndirme</li></ul>
+                            <button onclick="contact('PRO')" class="w-full py-2 bg-blue-600 rounded text-[10px] font-bold uppercase">SATIN AL</button>
+                        </div>
+                        <div class="package-card glass p-6 border-gold/50 flex flex-col items-center bg-gold/5">
+                            <h4 class="font-bold text-gold uppercase">Premium</h4>
+                            <p class="text-2xl my-4">₺599</p>
+                            <ul class="text-[10px] text-gray-400 space-y-2 mb-6"><li>Sınırsız Üretim</li><li>AI Akademik Mod</li></ul>
+                            <button onclick="contact('PREMIUM')" class="w-full btn-gold py-2 rounded text-[10px] uppercase">SATIN AL</button>
+                        </div>
+                        <div class="package-card glass p-6 border-purple-500/50 flex flex-col items-center">
+                            <h4 class="font-bold text-purple-400 uppercase">V.I.P</h4>
+                            <p class="text-2xl my-4">₺999</p>
+                            <ul class="text-[10px] text-gray-400 space-y-2 mb-6"><li>Tüm Modlar Açık</li><li>7/24 Destek</li></ul>
+                            <button onclick="contact('VIP')" class="w-full py-2 bg-purple-600 rounded text-[10px] font-bold uppercase">SATIN AL</button>
+                        </div>
                     </div>
                 </section>
             </div>
         </main>
     </div>
 
-    <footer class="h-20 bg-[#010409] border-t border-gold/20 fixed bottom-0 w-full z-[100] px-10 flex items-center justify-between">
-        <div class="flex flex-col">
-            <div class="text-[10px] text-gold font-bold tracking-[3px] uppercase">Sistem Sahibi & Geliştirici</div>
-            <div class="text-sm font-semibold text-white">
-                Orhan BOYRAZ <span class="text-gray-500 font-normal ml-2">| orhanboyraz0216@gmail.com | Nilüfer, BURSA</span>
-            </div>
+    <footer class="h-20 bg-[#010409] border-t border-gold/20 flex items-center justify-between px-10">
+        <div>
+            <div class="text-[10px] text-gold font-bold tracking-widest uppercase">Yönetim Paneli Şifresi: <span class="text-white">admin123</span></div>
+            <div class="text-sm font-semibold">Orhan BOYRAZ <span class="text-xs text-gray-500 font-normal">| 0541 866 0202</span></div>
         </div>
-
-        <div class="flex items-center gap-8">
-            <div class="text-right hidden md:block">
-                <div class="text-[10px] text-gold/60 italic font-bold">https://anadolunetwork.tr</div>
-                <div class="text-[9px] text-gray-600 uppercase font-bold">Yönetim Şifresi: <span class="text-white">admin123</span></div>
-            </div>
-            <div class="flex gap-4 text-gold">
-                <i class="fab fa-linkedin cursor-pointer"></i>
-                <i class="fab fa-github cursor-pointer"></i>
-                <i class="fas fa-envelope cursor-pointer"></i>
-            </div>
+        <div class="flex flex-col items-end">
+            <a href="https://anadolunetwork.tr" class="text-xs text-gold/80 italic hover:underline">https://anadolunetwork.tr</a>
+            <p class="text-[9px] text-gray-600 uppercase mt-1">© 2026 Tüm Hakları Saklıdır.</p>
         </div>
     </footer>
 
     <script>
-        let currentType = 'motivasyon';
+        let currentMod = 'motivasyon';
 
         function showPage(id) {
             document.querySelectorAll('.page-view').forEach(p => p.classList.add('hidden-page'));
@@ -150,48 +124,43 @@
             event.currentTarget.classList.add('active');
         }
 
-        function setType(type) {
-            currentType = type;
-            document.querySelectorAll('.type-card').forEach(c => c.classList.remove('active'));
-            document.getElementById('t-' + type).classList.add('active');
-            const labels = {
-                'motivasyon': 'Motivasyon Konusu Girin:',
-                'akademik': 'Akademik Başlık / Tez Konusu:',
-                'hikaye': 'Hikaye Teması veya Karakterler:',
-                'podcast': 'Podcast Başlığı / Röportaj:'
-            };
-            document.getElementById('input-label').innerText = labels[type];
+        function setMod(mod) {
+            currentMod = mod;
+            document.querySelectorAll('.mod-btn').forEach(b => b.classList.remove('border-gold/50', 'bg-gold/10'));
+            document.getElementById('m-'+mod).classList.add('border-gold/50', 'bg-gold/10');
+            document.getElementById('input-title').innerText = mod.toUpperCase() + " Konusu Giriniz:";
         }
 
-        async function generate() {
-            const input = document.getElementById('user-input').value;
-            if(!input) return alert('Lütfen konu girin!');
+        async function runAI() {
+            const input = document.getElementById('main-input').value;
+            if(!input) return alert('Lütfen bir konu yazın.');
             
-            const out = document.getElementById('output');
-            out.innerHTML = `<div class="flex items-center gap-3"><i class="fas fa-spinner fa-spin text-gold"></i> AI Motoru Yazıyor...</div>`;
+            const res = document.getElementById('result');
+            res.innerHTML = "AI Motoru Hazırlanıyor... Lütfen Bekleyin.";
             
-            await new Promise(r => setTimeout(r, 2000));
+            await new Promise(r => setTimeout(r, 1500));
             
-            let text = `[MOD: ${currentType.toUpperCase()}]\nKONU: ${input}\nÜRETİCİ: Orhan BOYRAZ\n---------------------------------\n`;
-            
-            if(currentType === 'motivasyon') text += "Asla vazgeçme! " + input + " konusundaki emeğin, gelecekteki başarının mimarıdır. Bugün attığın her adım...";
-            if(currentType === 'akademik') text += "Özet: " + input + " literatürde geniş yer tutan bir konudur. Bu çalışmada temel hipotezimiz...";
-            if(currentType === 'hikaye') text += "Karanlık bir geceydi, rüzgar " + input + " kokusunu getiriyordu. Kahramanımız yavaşça kapıyı araladı...";
-            if(currentType === 'podcast') text += "Giriş Müziği (30sn fade in). Sunucu: Merhaba! Bugün Orhan Boyraz ile " + input + " konusunu masaya yatırıyoruz...";
+            let text = `[MERKEZ: ORHAN BOYRAZ AI]\nMOD: ${currentMod.toUpperCase()}\n---------------------------------\n`;
+            if(currentMod === 'motivasyon') text += `Hayat bir yolculuktur ve "${input}" bu yolculuğun sadece bir parçası. Unutma Orhan Bey, en büyük zaferler en zor anlarda kazanılır...`;
+            if(currentMod === 'akademik') text += `Giriş: "${input}" üzerine yapılan araştırmalar gösteriyor ki, modern dünyada bu kavramın sosyo-ekonomik etkileri...`;
+            if(currentMod === 'hikaye') text += `Zamanın birinde, uzak diyarlarda "${input}" arayan bir bilge yaşarmış. Bir gün aynaya baktığında fark etmiş ki...`;
+            if(currentMod === 'podcast') text += `Sunucu: Merhaba! Bugün stüdyomuzda "${input}" konusunu konuşacağız. Hazırsanız derinliklere inelim...`;
 
-            out.innerText = text;
-            document.getElementById('download-zone').classList.remove('hidden');
+            res.innerText = text;
+            document.getElementById('dl-btns').classList.remove('hidden');
         }
 
         function download(fmt) {
-            const content = document.getElementById('output').innerText;
+            const content = document.getElementById('result').innerText;
             if(fmt === 'txt') {
                 const b = new Blob([content], {type:'text/plain'});
-                const a = document.createElement('a');
-                a.href = URL.createObjectURL(b); a.download = `OrhanB_AI_Icerik.txt`; a.click();
-            } else {
-                window.print(); // Profesyonel PDF için en hızlı çözüm
-            }
+                const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'icerik.txt'; a.click();
+            } else { window.print(); }
+        }
+
+        function contact(plan) {
+            const msg = encodeURIComponent(`Merhaba Orhan Bey, Dijital İçerik Üretim Merkezi'nden ${plan} paketi hakkında bilgi almak istiyorum.`);
+            window.location.href = `https://wa.me/905418660202?text=${msg}`;
         }
     </script>
 </body>
