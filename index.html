@@ -3,222 +3,367 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DİJİTAL İÇERİK ÜRETİM MERKEZİ</title>
+    <title>DİJİTAL İÇERİK ÜRETİM MERKEZİ | AI SaaS</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@300;400;600&display=swap');
-        
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@300;400;600;700&display=swap');
+
         :root {
-            --navy: #0a192f;
-            --gold: #d4af37;
-            --gold-light: #f1d592;
+            --navy-deep: #050b18;
+            --navy-light: #0a192f;
+            --gold-primary: #d4af37;
+            --gold-secondary: #aa8a1e;
+            --gold-gradient: linear-gradient(135deg, #fbf5b7 0%, #d4af37 50%, #aa771c 100%);
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--navy);
+            background-color: var(--navy-deep);
             color: #e2e8f0;
+            overflow: hidden;
         }
 
         .gold-text {
-            color: var(--gold);
-            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            background: var(--gold-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            font-family: 'Cinzel', serif;
         }
 
-        .gold-border { border: 1px solid var(--gold); }
-        .gold-bg { background: linear-gradient(135deg, #bf953f 0%, #aa771c 100%); }
+        .gold-border { border: 1px solid var(--gold-primary); }
+        .gold-bg { background: var(--gold-gradient); color: var(--navy-deep); }
+
+        .sidebar-item {
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
 
         .sidebar-item:hover, .sidebar-item.active {
             background: rgba(212, 175, 55, 0.1);
-            color: var(--gold-light);
-            border-right: 3px solid var(--gold);
+            color: var(--gold-primary);
+            border-left: 3px solid var(--gold-primary);
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
+            background: rgba(10, 25, 47, 0.7);
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 16px;
-        }
-
-        #login-overlay {
-            background: var(--navy);
-            z-index: 9999;
+            border-radius: 12px;
         }
 
         .hidden-panel { display: none; }
-        
-        .btn-gold {
-            background: linear-gradient(135deg, #bf953f 0%, #aa771c 100%);
-            color: #0a192f;
+
+        @keyframes gold-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+
+        .ai-btn {
+            background: var(--gold-gradient);
+            color: var(--navy-deep);
             font-weight: 700;
             transition: transform 0.2s;
         }
-        .btn-gold:hover { transform: scale(1.02); filter: brightness(1.1); }
+
+        .ai-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--navy-deep); }
+        ::-webkit-scrollbar-thumb { background: var(--gold-primary); border-radius: 10px; }
+
+        #login-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--navy-deep);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
-<body class="flex h-screen overflow-hidden">
+<body class="flex h-screen">
 
-    <div id="login-overlay" class="fixed inset-0 flex items-center justify-center p-4">
-        <div class="glass-card p-8 w-full max-w-md text-center border-gold">
-            <h1 class="text-2xl font-bold gold-text mb-6 uppercase" style="font-family: 'Cinzel'">Giriş Yap</h1>
-            <div class="space-y-4">
-                <input type="text" id="user-id" placeholder="Kullanıcı Adı" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-gold">
-                <input type="password" id="user-pass" placeholder="Şifre" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-gold">
-                <button onclick="checkLogin()" class="w-full btn-gold py-3 rounded-lg">MERKEZE BAĞLAN</button>
-                <p class="text-xs text-gray-500">Test için şifre: <span class="text-gold">admin123</span></p>
+    <div id="login-screen">
+        <div class="glass-card p-10 w-full max-w-md text-center gold-border">
+            <h1 class="text-3xl gold-text mb-8">GİRİŞ PANELİ</h1>
+            <div class="space-y-6">
+                <div class="text-left">
+                    <label class="text-xs text-gold-primary uppercase font-bold">Kullanıcı Kimliği</label>
+                    <input type="text" id="login-user" value="YÖNETİCİ" class="w-full bg-navy-light/50 border-b border-gold-primary p-3 outline-none text-white mt-1">
+                </div>
+                <div class="text-left">
+                    <label class="text-xs text-gold-primary uppercase font-bold">Güvenlik Anahtarı</label>
+                    <input type="password" id="login-pass" placeholder="••••••" class="w-full bg-navy-light/50 border-b border-gold-primary p-3 outline-none text-white mt-1">
+                </div>
+                <button onclick="handleLogin()" class="w-full ai-btn py-4 rounded shadow-lg">SİSTEME GİRİŞ YAP</button>
+                <p class="text-[10px] text-gray-500 italic">Varsayılan Şifre: admin123</p>
             </div>
         </div>
     </div>
 
-    <aside id="main-sidebar" class="w-72 border-r border-white/10 flex flex-col bg-[#081221] hidden">
-        <div class="p-6">
-            <h1 class="text-xl font-bold gold-text leading-tight" style="font-family: 'Cinzel'">
-                DİJİTAL İÇERİK<br>ÜRETİM MERKEZİ
-            </h1>
+    <aside id="sidebar" class="w-72 bg-[#060e1b] flex flex-col border-r border-gold-primary/20 hidden">
+        <div class="p-8 text-center border-b border-gold-primary/10">
+            <h1 class="text-xl gold-text leading-tight">DİJİTAL İÇERİK<br>ÜRETİM MERKEZİ</h1>
         </div>
-        
-        <nav class="flex-1 px-4 space-y-2 mt-4">
-            <a href="#" onclick="showPanel('dashboard')" class="sidebar-item active flex items-center p-3 rounded-xl gap-3 text-gray-400">
-                <i class="fas fa-th-large w-5 text-gold"></i> Dashboard
-            </a>
-            <a href="#" onclick="showPanel('book-gen')" class="sidebar-item flex items-center p-3 rounded-xl gap-3 text-gray-400">
-                <i class="fas fa-book-open w-5 text-gold"></i> Kitap Fabrikası
-            </a>
-            <a href="#" onclick="showPanel('video-text')" class="sidebar-item flex items-center p-3 rounded-xl gap-3 text-gray-400">
-                <i class="fas fa-closed-captioning w-5 text-gold"></i> Video Analiz
-            </a>
-            <a href="#" onclick="showPanel('subscription')" class="sidebar-item flex items-center p-3 rounded-xl gap-3 text-gray-400">
-                <i class="fas fa-crown w-5 text-gold"></i> Abonelik Planları
-            </a>
+
+        <nav class="flex-1 mt-6 px-4 space-y-2">
+            <button onclick="nav('dashboard')" class="nav-btn sidebar-item active w-full flex items-center p-4 gap-4 rounded-lg">
+                <i class="fas fa-home text-gold-primary"></i> <span>Genel Bakış</span>
+            </button>
+            <button onclick="nav('book')" class="nav-btn sidebar-item w-full flex items-center p-4 gap-4 rounded-lg">
+                <i class="fas fa-book text-gold-primary"></i> <span>Kitap Fabrikası</span>
+            </button>
+            <button onclick="nav('video')" class="nav-btn sidebar-item w-full flex items-center p-4 gap-4 rounded-lg">
+                <i class="fas fa-video text-gold-primary"></i> <span>Video-Metin AI</span>
+            </button>
+            <button onclick="nav('content')" class="nav-btn sidebar-item w-full flex items-center p-4 gap-4 rounded-lg">
+                <i class="fas fa-pen-fancy text-gold-primary"></i> <span>İçerik Yazarı</span>
+            </button>
+            <button onclick="nav('depo')" class="nav-btn sidebar-item w-full flex items-center p-4 gap-4 rounded-lg">
+                <i class="fas fa-database text-gold-primary"></i> <span>Yönetim Depo</span>
+            </button>
+            <button onclick="nav('subs')" class="nav-btn sidebar-item w-full flex items-center p-4 gap-4 rounded-lg">
+                <i class="fas fa-crown text-gold-primary"></i> <span>Abonelik Yönetimi</span>
+            </button>
         </nav>
 
-        <div class="p-6 border-t border-white/5">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full gold-bg flex items-center justify-center text-navy font-bold">A</div>
-                <div>
-                    <p class="text-sm font-bold">Admin Panel</p>
-                    <p class="text-xs text-gold">Premium Üye</p>
-                </div>
-            </div>
+        <div class="p-6 bg-navy-light/30 text-xs border-t border-gold-primary/20">
+            <p class="text-gold-primary font-bold">Giriş Yapıldı:</p>
+            <p class="text-white opacity-80 mt-1">Sistem Mimarı (Admin)</p>
         </div>
     </aside>
 
-    <main id="main-content" class="flex-1 overflow-y-auto p-8 hidden">
-        
-        <section id="panel-dashboard" class="panel">
-            <div class="flex justify-between items-center mb-10">
-                <h2 class="text-3xl font-bold gold-text uppercase" style="font-family: 'Cinzel'">Panel Özeti</h2>
-                <div class="text-sm text-gray-400">21 Nisan 2026, Salı</div>
+    <main id="app-body" class="flex-1 flex flex-col overflow-hidden hidden">
+        <header class="h-20 border-b border-gold-primary/10 flex items-center justify-between px-10 bg-navy-deep">
+            <div class="flex items-center gap-4">
+                <span class="text-gold-primary"><i class="fas fa-signal"></i> Sistem Aktif</span>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="glass-card p-6 border-l-4 border-l-gold">
-                    <p class="text-gray-400 text-sm uppercase">Kalan Kredi</p>
-                    <h3 class="text-3xl font-bold gold-text mt-2">∞ Sınırsız</h3>
+            <div class="flex items-center gap-6">
+                <div class="flex flex-col text-right">
+                    <span class="text-xs text-gray-500 uppercase">Bulut Depolama</span>
+                    <span class="text-sm text-gold-primary font-bold">12.4 GB / 100 GB</span>
                 </div>
-                <div class="glass-card p-6">
-                    <p class="text-gray-400 text-sm uppercase">Aktif Paket</p>
-                    <h3 class="text-3xl font-bold text-white mt-2">PREMIUM</h3>
-                </div>
-                <div class="glass-card p-6">
-                    <p class="text-gray-400 text-sm uppercase">Üretilen İçerik</p>
-                    <h3 class="text-3xl font-bold text-white mt-2">1,248</h3>
-                </div>
+                <button onclick="location.reload()" class="w-10 h-10 rounded-full border border-gold-primary/30 flex items-center justify-center hover:bg-gold-primary/10 transition">
+                    <i class="fas fa-power-off text-red-500"></i>
+                </button>
             </div>
-        </section>
+        </header>
 
-        <section id="panel-subscription" class="panel hidden-panel">
-            <h2 class="text-3xl font-bold gold-text text-center mb-12 uppercase" style="font-family: 'Cinzel'">Üyelik Planları</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                
-                <div class="glass-card p-8 flex flex-col items-center text-center">
-                    <h3 class="text-xl font-bold mb-2">FREE</h3>
-                    <div class="text-4xl font-bold my-4">₺0 <span class="text-sm text-gray-500">/Ay</span></div>
-                    <ul class="text-sm text-gray-400 space-y-3 mb-8 text-left w-full">
-                        <li><i class="fas fa-check text-gold mr-2"></i> Günlük 3 AI Üretim</li>
-                        <li><i class="fas fa-check text-gold mr-2"></i> Standart Blog Yazarı</li>
-                        <li><i class="fas fa-times text-red-500 mr-2"></i> Kitap Oluşturma</li>
-                        <li><i class="fas fa-times text-red-500 mr-2"></i> Video-to-Text</li>
-                    </ul>
-                    <button class="w-full py-2 rounded border border-gray-600 hover:bg-white/5 transition mt-auto">Mevcut Plan</button>
+        <div class="flex-1 overflow-y-auto p-10 bg-gradient-to-b from-navy-deep to-navy-light">
+            
+            <section id="view-dashboard" class="view space-y-10">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="glass-card p-6 border-l-4 border-gold-primary">
+                        <p class="text-xs text-gray-400">Üretilen Sayfa</p>
+                        <h4 class="text-3xl font-bold mt-2">2,485</h4>
+                    </div>
+                    <div class="glass-card p-6 border-l-4 border-gold-primary">
+                        <p class="text-xs text-gray-400">Kalan AI Kredisi</p>
+                        <h4 class="text-3xl font-bold mt-2 text-gold-primary">∞</h4>
+                    </div>
+                    <div class="glass-card p-6 border-l-4 border-gold-primary">
+                        <p class="text-xs text-gray-400">Aktif Projeler</p>
+                        <h4 class="text-3xl font-bold mt-2">14</h4>
+                    </div>
+                    <div class="glass-card p-6 border-l-4 border-gold-primary">
+                        <p class="text-xs text-gray-400">Paket Durumu</p>
+                        <h4 class="text-3xl font-bold mt-2">PREMIUM</h4>
+                    </div>
                 </div>
 
-                <div class="glass-card p-8 flex flex-col items-center text-center relative border-gold scale-105 shadow-2xl">
-                    <div class="absolute -top-4 bg-gold text-navy text-xs font-bold px-4 py-1 rounded-full uppercase">En Popüler</div>
-                    <h3 class="text-xl font-bold mb-2 gold-text">PRO</h3>
-                    <div class="text-4xl font-bold my-4">₺499 <span class="text-sm text-gray-500">/Ay</span></div>
-                    <ul class="text-sm text-gray-400 space-y-3 mb-8 text-left w-full">
-                        <li><i class="fas fa-check text-gold mr-2"></i> Sınırsız Blog Yazımı</li>
-                        <li><i class="fas fa-check text-gold mr-2"></i> 10 Kitap / Ay</li>
-                        <li><i class="fas fa-check text-gold mr-2"></i> Full Video Transkripsiyon</li>
-                        <li><i class="fas fa-check text-gold mr-2"></i> Öncelikli Destek</li>
-                    </ul>
-                    <button class="w-full btn-gold py-2 rounded mt-auto">ABONE OL</button>
+                <div class="glass-card p-8">
+                    <h3 class="gold-text text-xl mb-6 uppercase">Son Aktiviteler</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center p-4 bg-white/5 rounded">
+                            <span class="flex items-center gap-3"><i class="fas fa-file-pdf text-gold-primary"></i> Modern Psikoloji Kitabı.pdf</span>
+                            <span class="text-xs text-gray-500">12 Dakika Önce</span>
+                        </div>
+                        <div class="flex justify-between items-center p-4 bg-white/5 rounded">
+                            <span class="flex items-center gap-3"><i class="fas fa-video text-gold-primary"></i> YouTube Script v2.mp4</span>
+                            <span class="text-xs text-gray-500">2 Saat Önce</span>
+                        </div>
+                    </div>
                 </div>
+            </section>
 
-                <div class="glass-card p-8 flex flex-col items-center text-center">
-                    <h3 class="text-xl font-bold mb-2">PREMIUM</h3>
-                    <div class="text-4xl font-bold my-4">₺999 <span class="text-sm text-gray-500">/Ay</span></div>
-                    <ul class="text-sm text-gray-400 space-y-3 mb-8 text-left w-full">
-                        <li><i class="fas fa-check text-gold mr-2"></i> Her Şey Sınırsız</li>
-                        <li><i class="fas fa-check text-gold mr-2"></i> Özel AI Eğitimi</li>
-                        <li><i class="fas fa-check text-gold mr-2"></i> API Erişimi</li>
-                        <li><i class="fas fa-check text-gold mr-2"></i> 7/24 VIP Destek</li>
-                    </ul>
-                    <button class="w-full py-2 rounded border border-gold text-gold hover:bg-gold/10 transition mt-auto">YÜKSELT</button>
+            <section id="view-book" class="view hidden-panel space-y-6">
+                <div class="max-w-3xl">
+                    <h2 class="text-2xl gold-text mb-2">50 SAYFALIK KİTAP ÜRETİMİ</h2>
+                    <p class="text-gray-400 mb-8">Konu, ton ve hedef kitleyi belirleyin, AI tam yapılandırılmış kitabınızı yazsın.</p>
+                    
+                    <div class="glass-card p-8 space-y-6">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="text-xs text-gold-primary font-bold">KİTAP KONUSU</label>
+                                <input id="book-topic" type="text" placeholder="Örn: Finansal Özgürlük" class="w-full bg-navy-deep border border-gold-primary/30 p-3 mt-2 rounded">
+                            </div>
+                            <div>
+                                <label class="text-xs text-gold-primary font-bold">DİL TONU</label>
+                                <select class="w-full bg-navy-deep border border-gold-primary/30 p-3 mt-2 rounded">
+                                    <option>Profesyonel & Akademik</option>
+                                    <option>Sürükleyici Hikaye</option>
+                                    <option>Motivasyonel</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button onclick="simulateAI('book-result')" class="ai-btn w-full py-4 rounded uppercase tracking-widest">Yazımı Başlat</button>
+                    </div>
+
+                    <div id="book-result" class="mt-8 glass-card p-8 min-h-[200px] hidden">
+                        <div id="typing-area" class="text-gray-300 leading-relaxed font-serif"></div>
+                    </div>
                 </div>
+            </section>
 
+            <section id="view-depo" class="view hidden-panel">
+                <h2 class="text-2xl gold-text mb-6">YÖNETİM PLAN DEPOSU</h2>
+                <div class="glass-card overflow-hidden">
+                    <table class="w-full text-left">
+                        <thead class="bg-gold-primary/10">
+                            <tr>
+                                <th class="p-4 text-gold-primary">Dosya Adı</th>
+                                <th class="p-4 text-gold-primary">Tür</th>
+                                <th class="p-4 text-gold-primary">Boyut</th>
+                                <th class="p-4 text-gold-primary">Tarih</th>
+                                <th class="p-4 text-gold-primary">İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            <tr class="border-b border-white/5 hover:bg-white/5">
+                                <td class="p-4 italic">Borsa_Egitim_Seti.txt</td>
+                                <td class="p-4">İçerik</td>
+                                <td class="p-4">1.2 MB</td>
+                                <td class="p-4">20.04.2026</td>
+                                <td class="p-4"><button class="text-gold-primary"><i class="fas fa-download"></i></button></td>
+                            </tr>
+                            <tr class="border-b border-white/5 hover:bg-white/5">
+                                <td class="p-4 italic">Tanitim_Senaryosu_V1.docx</td>
+                                <td class="p-4">Senaryo</td>
+                                <td class="p-4">450 KB</td>
+                                <td class="p-4">19.04.2026</td>
+                                <td class="p-4"><button class="text-gold-primary"><i class="fas fa-download"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="view-subs" class="view hidden-panel">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="glass-card p-8 flex flex-col items-center text-center">
+                        <h3 class="text-xl font-bold">FREE</h3>
+                        <div class="text-3xl gold-text my-4">₺0 / Ay</div>
+                        <ul class="text-sm space-y-3 mb-10 opacity-70">
+                            <li>Günlük 3 İçerik</li>
+                            <li>Sınırlı Kelime</li>
+                            <li>Standart Hız</li>
+                        </ul>
+                        <button class="w-full border border-gold-primary/50 py-2 rounded">Mevcut Paket</button>
+                    </div>
+                    <div class="glass-card p-8 flex flex-col items-center text-center border-gold-primary bg-gold-primary/5 relative">
+                        <div class="absolute -top-3 bg-gold-primary text-navy-deep px-3 py-1 text-xs font-bold rounded">EN ÇOK SEÇİLEN</div>
+                        <h3 class="text-xl font-bold">PRO</h3>
+                        <div class="text-3xl gold-text my-4">₺499 / Ay</div>
+                        <ul class="text-sm space-y-3 mb-10 opacity-70">
+                            <li>Sınırsız Blog</li>
+                            <li>Ayda 5 Kitap</li>
+                            <li>Hızlı AI İşleme</li>
+                        </ul>
+                        <button class="w-full ai-btn py-2 rounded">YÜKSELT</button>
+                    </div>
+                    <div class="glass-card p-8 flex flex-col items-center text-center">
+                        <h3 class="text-xl font-bold gold-text">PREMIUM</h3>
+                        <div class="text-3xl gold-text my-4">₺1,299 / Ay</div>
+                        <ul class="text-sm space-y-3 mb-10 opacity-70">
+                            <li>Tam Sınırsız Erişim</li>
+                            <li>Öncelikli GPU Desteği</li>
+                            <li>Ticari Kullanım Hakkı</li>
+                        </ul>
+                        <button class="w-full ai-btn py-2 rounded">SATIN AL</button>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <footer class="h-16 border-t border-gold-primary/10 bg-navy-deep flex items-center justify-between px-10 text-[10px] uppercase tracking-widest text-gray-500 font-semibold">
+            <div>&copy; 2026 DİJİTAL İÇERİK ÜRETİM MERKEZİ - TÜM HAKLARI SAKLIDIR.</div>
+            <div class="flex gap-6">
+                <span>Geliştirici: Senior Full-Stack AI Architect</span>
+                <span>Sunucu: TR-CENTRAL-01</span>
+                <span>Güvenlik: SSL & AES-256</span>
             </div>
-        </section>
-
-        <section id="panel-book-gen" class="panel hidden-panel">
-            <h2 class="text-2xl font-bold gold-text mb-6">KİTAP ÜRETİM MERKEZİ</h2>
-            <div class="glass-card p-8">
-                <p class="text-gray-400">AI kitap motoru çalışmaya hazır. Lütfen bir konu girin...</p>
-                <input type="text" class="w-full bg-white/5 border border-white/10 rounded mt-4 p-3 focus:border-gold outline-none">
-                <button class="btn-gold px-6 py-3 rounded mt-4">TASLAĞI BAŞLAT</button>
-            </div>
-        </section>
-
+        </footer>
     </main>
 
+    <div id="notifier" class="fixed bottom-20 right-10 z-50"></div>
+
     <script>
-        function checkLogin() {
-            const pass = document.getElementById('user-pass').value;
+        // LOGIN LOGIC
+        function handleLogin() {
+            const pass = document.getElementById('login-pass').value;
             if(pass === 'admin123') {
-                document.getElementById('login-overlay').style.display = 'none';
-                document.getElementById('main-sidebar').classList.remove('hidden');
-                document.getElementById('main-content').classList.remove('hidden');
-                notify('Giriş Başarılı! Merkeze Hoş Geldiniz.');
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('sidebar').classList.remove('hidden');
+                document.getElementById('app-body').classList.remove('hidden');
+                showNotification('Sisteme Başarıyla Giriş Yapıldı. Tüm Modüller Aktif.', 'success');
             } else {
-                alert('Hatalı Şifre! Lütfen tekrar deneyin.');
+                alert('GEÇERSİZ GÜVENLİK ANAHTARI!');
             }
         }
 
-        function showPanel(panelId) {
-            document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden-panel'));
-            document.getElementById('panel-' + panelId).classList.remove('hidden-panel');
+        // NAVIGATION
+        function nav(panel) {
+            document.querySelectorAll('.view').forEach(v => v.classList.add('hidden-panel'));
+            document.getElementById('view-' + panel).classList.remove('hidden-panel');
             
-            document.querySelectorAll('.sidebar-item').forEach(item => {
-                item.classList.remove('active');
-                if(item.getAttribute('onclick').includes(panelId)) item.classList.add('active');
-            });
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            event.currentTarget.classList.add('active');
         }
 
-        function notify(msg) {
+        // AI SIMULATION & TYPING EFFECT
+        async function simulateAI(resultId) {
+            const topic = document.getElementById('book-topic').value || 'İsimsiz Proje';
+            const resDiv = document.getElementById(resultId);
+            const typeDiv = document.getElementById('typing-area');
+            
+            resDiv.classList.remove('hidden');
+            typeDiv.innerHTML = '<span class="animate-pulse text-gold-primary italic">AI Derin Öğrenme Katmanları Hazırlanıyor...</span>';
+            
+            await new Promise(r => setTimeout(r, 2000));
+            typeDiv.innerHTML = '';
+            
+            const content = `[KİTAP BAŞLIĞI: ${topic.toUpperCase()}]\n\nGİRİŞ: Bu eser, modern çağın gereksinimleri ve ${topic} kavramının evrimi üzerine kurgulanmıştır. \n\nBÖLÜM 1: TEMELLER\n${topic} dünyasına adım atarken dikkat edilmesi gereken ana parametreler...\n\n[SAYFA 1-50 ÜRETİMİ TAMAMLANDI - PDF OLARAK DEPOYA AKTARILDI]`;
+
+            let i = 0;
+            const timer = setInterval(() => {
+                if (i < content.length) {
+                    typeDiv.innerHTML += content.charAt(i) === '\n' ? '<br>' : content.charAt(i);
+                    i++;
+                    resDiv.scrollTop = resDiv.scrollHeight;
+                } else {
+                    clearInterval(timer);
+                    showNotification('Üretim Başarıyla Tamamlandı ve Depoya Kaydedildi!', 'success');
+                }
+            }, 30);
+        }
+
+        // NOTIFICATION SYSTEM
+        function showNotification(msg, type) {
+            const n = document.getElementById('notifier');
             const toast = document.createElement('div');
-            toast.className = "fixed bottom-5 right-5 gold-bg text-navy px-6 py-3 rounded-lg font-bold shadow-2xl transform transition-all duration-500 translate-y-20";
-            toast.innerText = msg;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.classList.remove('translate-y-20'), 100);
+            toast.className = "glass-card gold-border px-6 py-4 mb-4 transform transition-all duration-500 translate-x-full shadow-2xl bg-gold-primary/10";
+            toast.innerHTML = `<div class="flex items-center gap-3"><i class="fas fa-circle-check text-gold-primary"></i> <span class="text-sm font-bold">${msg}</span></div>`;
+            n.appendChild(toast);
+            
+            setTimeout(() => toast.classList.remove('translate-x-full'), 100);
             setTimeout(() => {
                 toast.classList.add('opacity-0');
                 setTimeout(() => toast.remove(), 500);
-            }, 3000);
+            }, 4000);
         }
     </script>
 </body>
